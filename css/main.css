@@ -127,7 +127,7 @@ body.step3 #step1, body.step3 #step2 {
 #step1 figure.not-ready video {
     border: solid gray 1px;
     width: 100%;
-    height: 200px;
+    height: 100%;
 }
 
 #step1 figure.not-ready:after {
@@ -165,8 +165,8 @@ body.step3 #step1, body.step3 #step2 {
 
 #step2 figure.loading img {
     border: solid gray 1px;
-    width: 240px;
-    height: 180px;
+    width: 1080px;
+    height: 1080px;
 }
 
 @keyframes pulsate {

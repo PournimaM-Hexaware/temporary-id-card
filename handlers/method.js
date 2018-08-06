@@ -4,7 +4,10 @@ var checkDefaulter =require('./tracker')
 var detailsArray = require('./empjson');
 var moment = require('moment');
 var mailingFunction = require('./mailer')
+ 
+var kairosobj =new kairos()
 
+var checkDefaulterObj =new checkDefaulter()
 class Handler{
 
     enrollfunction(req,res){
@@ -14,7 +17,7 @@ class Handler{
         var subjectid=JSON.stringify(req.body.employeeid);
         var subject_id=req.body.employeeid;
         var otp=req.body.otp;
-        new kairos().enrollData(img,subjectid,(callback)=>{
+        kairosobj.enrollData(img,subjectid,(callback)=>{
             var body=callback.body;
             if (JSON.parse(body) === "Authentication failed"){
                 response =JSON.parse(body)
@@ -46,13 +49,13 @@ class Handler{
                             "empId" :subjectid,
                             "date" : formatted
                         }
-                        new checkDefaulter().recordDefaulter(record)
+                        checkDefaulterObj.recordDefaulter(record)
                         var detailsArray=JSON.parse(body).ipagedetails_official_info
                         for(var i=0;i<detailsArray.length ;i++){
                             var mailingaddress=detailsArray[i].employeeemail
                         }
                         console.log("mailing address is",mailingaddress)
-                        new checkDefaulter().filterRegularDefaulter(subject_id,(error,callback)=>{
+                        checkDefaulterObj.filterRegularDefaulter(subject_id,(error,callback)=>{
                             console.log("inside filter defaulter in method class")
                             if(error) {  
                                 console.log(error)
@@ -87,7 +90,7 @@ class Handler{
     recognizeFunction(req,res){
         var data = JSON.stringify(req.body.myImage);
         var img = req.body.myImage;
-        new kairos().recognize(data,(callback)=>{
+        kairosobj.recognize(data,(callback)=>{
             var body=callback.body
             console.log(JSON.parse(body).images[0].transaction.subject_id)
             if (JSON.parse(body) === "Authentication failed"){
@@ -128,13 +131,13 @@ class Handler{
                         "empId" :subject_id,
                         "date" : formatted
                     }
-                    new checkDefaulter().recordDefaulter(record)
+                    checkDefaulterObj.recordDefaulter(record)
                     var detailsArray=JSON.parse(body).ipagedetails_official_info
                     for(var i=0;i<detailsArray.length ;i++){
                         var mailingaddress=detailsArray[i].employeeemail
                     }
                     console.log("mailing address is",mailingaddress)
-                    new checkDefaulter().filterRegularDefaulter(subject_id,(error,record)=>{
+                    checkDefaulterObj.filterRegularDefaulter(subject_id,(error,record)=>{
                         console.log("inside filter defaulter in method recognize function class")
                     if(error) {  
                         console.log(error)
@@ -173,7 +176,7 @@ class Handler{
     detrainFunction(req,res){
         console.log("inside detrain")
         var subjectid=JSON.stringify(req.body.employeeData)
-        new kairos().detrain(subjectid,(callback)=>{
+        kairosobj.detrain(subjectid,(callback)=>{
             var body=callback.body;
             if(error){
                 console.log("error")
@@ -214,7 +217,8 @@ class Handler{
     fillUserData(req,res){
         var image=req.body.imageData;
         console.log("filldata page")
-        new messenger().sendSms((message)=>{       
+        var sms ="Onetime password (OTP) for your TPIN request over google assistant is 546700. this is usable once & valid for 15 mins from the request.PLEASE DO NOT SHARE WITH ANYONE."   
+        new messenger().sendSms(sms,(message)=>{   
             if(message.status == "queued"){
                 res.render('fillData',{
                     image:image

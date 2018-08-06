@@ -5,42 +5,35 @@ var path = require('path');
 var morgan = require('morgan');
 
 //Package Dependencies
-
+var response = new methods()
 
 router.get('/', function(req, res) {
   res.render('index');
   });
-
-  // router.route('/api/v1/')
-//Route to specific url
-  // .get('/', (req, res) => {
-  //   res.render('index');
-  // })
 
   router.get('/getdata',(req,res)=>{
     res.render('index_old')
   })
 
   router.post('/enroll',function(req, res) {
-    var response = new methods().enrollfunction(req,res)
+    response.enrollfunction(req,res)
     })  //call enroll function 
  
   //Post the data 
   router.post('/upload',function(req, res) {
-    // console.log("my body",req)
-    var response = new methods().recognizeFunction(req,res)
+    response.recognizeFunction(req,res)
   })//call recognize function
 
   router.post('/detrain',function(req, res) {
-    var response = new methods().detrainFunction(req,res)
+    response.detrainFunction(req,res)
   })//call detrain function
 
   router.post('/response',function(req, res) {
-    var response = new methods().giveResponse(req,res) 
+    response.giveResponse(req,res)
   })// call response function
 
   router.post('/fillData',function(req, res) {
-    var response = new methods().fillUserData(req,res)
+    response.fillUserData(req,res)
   })//call filldata function
 
 

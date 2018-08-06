@@ -45,4 +45,3 @@ app.listen(port);
 console.log("Server Running Successfully at port " + port);
 //Listener
 
-module.exports = app;

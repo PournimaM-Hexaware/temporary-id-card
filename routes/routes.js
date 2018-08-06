@@ -1,10 +1,9 @@
 var express = require('express');
-var app = express();
 var router = express.Router();
 var methods = require('../handlers/method.js');
 var path = require('path');
 var morgan = require('morgan');
-var ap=require('../index.js');
+
 //Package Dependencies
 
 
